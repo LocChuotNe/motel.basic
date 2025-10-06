@@ -1,0 +1,263 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Home</title>
+	<meta charset="utf-8">
+	<meta name="format-detection" content="telephone=no">
+	<link rel="icon" href="images/favicon.ico" type="image/x-icon">
+	<link rel="stylesheet" href="css/grid.css">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/booking.css">
+	<link rel="stylesheet" href="css/jquery.fancybox.css">
+
+	<script src="js/jquery.js"></script>
+	<script src="js/jquery-migrate-1.2.1.js"></script>
+
+	<!--[if lt IE 9]>
+	<html class="lt-ie9">
+	<div style=' clear: both; text-align:center; position: relative;'>
+		<a href="https://windows.microsoft.com/en-US/internet-explorer/..">
+			<img src="images/ie8-panel/warning_bar_0000_us.jpg" border="0" height="42" width="820"
+				 alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today."/>
+		</a>
+	</div>
+	<script src="js/html5shiv.js"></script>    
+	<![endif]-->
+
+	<script src='js/device.min.js'></script>
+</head>
+
+<body>
+<div class="page">
+	<!--========================================================
+							  HEADER
+	=========================================================-->
+	<header>
+		<div class="brand">
+			<h1 class="brand_name">
+				<a href="index.htm"><span class="icon icon-md-reminder6"></span><em>Premium</em> Hotel</a>
+			</h1>
+		</div>
+	</header>
+	<!--========================================================
+							  CONTENT
+	=========================================================-->
+	<main>
+		<section class="parallax parallax01">
+			<div class="container">
+				<div class="row">
+					<div class="grid_6">
+						<div class="promo-box">
+							<p>Room Availability Checker <em>and Booking</em></p>
+						</div>
+					</div>
+					<div class="preffix_2 grid_4">
+						<div class="booking-box">
+							<h2>Booking</h2>
+							<form id="bookingForm" class="booking-form">
+								<div class="tmInput">
+									<input name="Name" placeholder="Full Name" type="text" data-constraints='@NotEmpty @Required @AlphaSpecial'>
+								</div>
+								<div class="tmInput">
+									<input name="Email:" placeholder="E-mail" type="text" data-constraints='@NotEmpty @Required @Email'>
+								</div>
+                				<label class="tmDatepicker">
+                				  <input type="text" name="Check in" placeholder='Check in' data-constraints="@NotEmpty @Required @Date">
+                				</label>
+                				<label class="tmDatepicker">
+                				  <input type="text" name="Check out" placeholder='Check out' data-constraints="@NotEmpty @Required @Date">
+                				</label>
+								<select name="Adults" class="tmSelect manual" data-constraints="@NotEmpty @Required">
+									<option>Adults</option>
+									<option>option 1</option>
+									<option>option 2</option>
+									<option>option 3</option>
+									<option>option 4</option>
+								</select>
+								<select name="Children" class="tmSelect manual" data-constraints="@NotEmpty @Required">
+									<option>Children</option>
+									<option>option 1</option>
+									<option>option 2</option>
+									<option>option 3</option>
+									<option>option 4</option>
+								</select>
+							  <a href="#" class="btn" data-type="submit">Reservation now!</a>
+							</form>
+							<p>Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="well center border">
+			<div class="container">
+				<h2>Welcome to Our Hotel</h2>
+				<h3>Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor.</h3>
+				<p>Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididun.</p>
+			</div>
+		</section>
+
+		<section class="well">
+			<div class="container">
+				<div class="custom-box01">
+					<div class="row">
+						<div class="grid_6">
+							<div class="img">
+								<img src="images/img01.jpg" alt="">
+							</div>
+						</div>
+						<div class="grid_6">
+							<h2>About Us</h2>
+							<p>Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.</p>
+							<div class="iconed-box">
+								<div class="icon icon-ith-motel"></div>
+								<h3>Dolor sit amet conse </h3>
+								<p>Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
+							</div>
+							<div class="iconed-box">
+								<div class="icon icon-ith-hotel77"></div>
+								<h3>Dolor sit amet conse </h3>
+								<p>Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="parallax parallax02 center">
+			<div class="container">
+				<h2>Our Events</h2>
+				<div class="custom-box02 left">
+					<div class="row">
+						<div class="grid_6">
+							<div class="iconed-box">
+								<div class="icon icon-ith-cup53"></div>
+								<h3>Dolor sit amet conse </h3>
+								<p>Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
+							</div>
+						</div>
+						<div class="grid_6">
+							<div class="iconed-box">
+								<div class="icon icon-ith-dont-disturb"></div>
+								<h3>Dolor sit amet conse </h3>
+								<p>Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="grid_6">
+							<div class="iconed-box">
+								<div class="icon icon-ith-suitcase47"></div>
+								<h3>Dolor sit amet conse </h3>
+								<p>Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
+							</div>
+						</div>
+						<div class="grid_6">
+							<div class="iconed-box">
+								<div class="icon icon-ith-hanger24"></div>
+								<h3>Dolor sit amet conse </h3>
+								<p>Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="well center">
+			<div class="container">
+				<h2>Testimonials</h2>
+				<figure class="testimonial-box">
+					<div class="img"><img src="images/img02.jpg" alt=""></div>
+  				<blockquote>Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.</blockquote>
+  				<figcaption>Amet conse ctetur</figcaption>
+				</figure>
+			</div>
+		</section>
+
+		<section>
+			<div class="gallery-box">
+				<div class="img"><a data-fancybox-group="gallery" class="thumb" href="images/img03_full.jpg"><img src="images/img03.jpg" alt=""><span class="thumb_overlay"></span></a></div>
+				<div class="img"><a data-fancybox-group="gallery" class="thumb" href="images/img04_full.jpg"><img src="images/img04.jpg" alt=""><span class="thumb_overlay"></span></a></div>
+				<div class="img"><a data-fancybox-group="gallery" class="thumb" href="images/img05_full.jpg"><img src="images/img05.jpg" alt=""><span class="thumb_overlay"></span></a></div>
+				<div class="img"><a data-fancybox-group="gallery" class="thumb" href="images/img06_full.jpg"><img src="images/img06.jpg" alt=""><span class="thumb_overlay"></span></a></div>
+				<div class="img"><a data-fancybox-group="gallery" class="thumb" href="images/img07_full.jpg"><img src="images/img07.jpg" alt=""><span class="thumb_overlay"></span></a></div>
+				<div class="img"><a data-fancybox-group="gallery" class="thumb" href="images/img08_full.jpg"><img src="images/img08.jpg" alt=""><span class="thumb_overlay"></span></a></div>
+				<div class="img"><a data-fancybox-group="gallery" class="thumb" href="images/img09_full.jpg"><img src="images/img09.jpg" alt=""><span class="thumb_overlay"></span></a></div>
+				<div class="img"><a data-fancybox-group="gallery" class="thumb" href="images/img10_full.jpg"><img src="images/img10.jpg" alt=""></a></div>
+			</div>
+		</section>
+
+		<section class="well well__01 bg-1 center">
+			<div class="container">
+				<h2>Subscribe</h2>
+				<div class="custom-box03">
+					<p>Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.</p>
+					<form id="subscribe-form" class="subscribe-form">
+						<div class="success">Your subscription request has been sent!</div>
+						<label class="email">
+							<input type="email" value="Enter your email">
+							<span class="error">*Invalid email.</span>
+						</label>
+						<a data-type="submit" href="#" class="btn">Subscribe</a>
+					</form>
+				</div>			
+			</div>			
+		</section>
+
+	</main>
+
+	<!--========================================================
+							  FOOTER
+	=========================================================-->
+	<footer>
+		<div class="container">
+			<div class="footer-box center">
+				<div class="footer-brand">
+					<a href="index.htm"><span class="icon icon-md-reminder6"></span><em>Premium</em> Hotel</a>
+				</div>
+				<div class="address">4578 Marmora Road,Glasgow D04 89GR</div>
+				<div class="phone"><div><span class="icon icon-md-phone370"></span>800-2345-6789</div></div>
+				<div class="socials">
+					<ul>
+						<li><a href="#" class="fa fa-facebook"></a></li>
+						<li><a href="#" class="fa fa-twitter"></a></li>
+						<li><a href="#" class="fa fa-google-plus"></a></li>
+					</ul>
+				</div>
+				<div class="copyright">
+					Premium Hotel © <span id="copyright-year"></span>
+					<!-- {%FOOTER_LINK} -->					
+				</div>
+			</div>
+		</div>
+		<section class="map">
+			<div id="google-map" class="map_model" data-zoom="11" data-x="-73.9924068" data-y="40.746197"></div>
+			<ul class="map_locations">
+				<li data-x="-73.9924068" data-y="40.746197">
+					<p> 9870 St Vincent Place, Glasgow, DC 45 Fr 45. <span>800 2345-6789</span></p>
+				</li>
+			</ul>
+		</section>
+	</footer>
+</div>
+
+<script src="js/script.js"></script>
+<!-- coded by nyan -->
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-7078796-5']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'https://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<!-- Google Tag Manager --><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-P9FT69" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-P9FT69');</script><!-- End Google Tag Manager --></body>
+</html>
