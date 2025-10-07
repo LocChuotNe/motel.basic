@@ -9,6 +9,7 @@ class Product extends BaseController
 {
 	protected $data;
 	public $nestedsetbie;
+	protected $auth;
 
 
 	public function __construct()
@@ -21,7 +22,12 @@ class Product extends BaseController
 
 	public function index($page = 1)
 	{
+		helper(['mysavelog']);
+		$user = authentication();
 		$session = session();
+
+
+
 		$flag = $this->authentication->check_permission([
 			'routes' => 'backend/product/product/index'
 		]);
@@ -56,7 +62,7 @@ class Product extends BaseController
 		$where = $this->condition_where();
 		$keyword = $this->condition_keyword();
 		$join = $this->condition_join();
-		$catalogue = $this->condition_catalogue();
+		$catalogue = $this->condition_catalogue($user['id']);
 		$config['total_rows'] = $this->AutoloadModel->_get_where([
 			'select' => 'tb1.id',
 			'table' => $this->data['module'] . ' as tb1',
@@ -103,7 +109,10 @@ class Product extends BaseController
 
 	public function create()
 	{
+		helper(['mysavelog']);
+		$user = authentication();
 		$session = session();
+		
 		$flag = $this->authentication->check_permission([
 			'routes' => 'backend/product/product/create'
 		]);
@@ -118,6 +127,7 @@ class Product extends BaseController
 			'table' => 'id_general',
 			'where' => ['module' => $this->data['module']],
 		]);
+		dd($this->data['check_code']);die;
 		if (!isset($this->data['check_code']) && !is_array($this->data['check_code'])) {
 			$session->setFlashdata('message-danger', 'Bạn chưa tạo phần cấu hình chung cho mã Sản phẩm!');
 			return redirect()->to(BASE_URL . 'backend/product/product/index');
@@ -174,6 +184,9 @@ class Product extends BaseController
 						$this->nestedsetbie->Get('level ASC, order ASC');
 						$this->nestedsetbie->Recursive(0, $this->nestedsetbie->Set());
 						$this->nestedsetbie->Action();
+
+						write_audit_log($user['id'], 'Thêm Mới', 'Thêm Mới Sản phẩm Thành Công');
+						
 						$session->setFlashdata('message-success', 'Tạo Sản phẩm Thành Công! Hãy tạo danh mục tiếp theo.');
 						return redirect()->to(BASE_URL . 'backend/product/product/create');
 					}

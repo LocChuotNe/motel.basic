@@ -6,13 +6,13 @@ use App\Libraries\Nestedsetbie;
 class Catalogue extends BaseController{
 	protected $data;
 	public $nestedsetbie;
+	protected $auth;
 
 
 	public function __construct(){
 		$this->data = [];
 		$this->data['module'] = 'product_catalogue';
 		$this->nestedsetbie = new Nestedsetbie(['table' => $this->data['module'],'language' => $this->currentLanguage()]);
-
 	}
 
 	public function index($page = 1){
@@ -24,7 +24,10 @@ class Catalogue extends BaseController{
  			$session->setFlashdata('message-danger', 'Bạn không có quyền truy cập vào chức năng này!');
  			return redirect()->to(BASE_URL.'backend/dashboard/dashboard/index');
 		}
+
+		$user = authentication();
 		helper(['mypagination']);
+
 		$page = (int)$page;
 		$perpage = ($this->request->getGet('perpage')) ? $this->request->getGet('perpage') : 20;
 		$where = $this->condition_where();
@@ -41,6 +44,12 @@ class Catalogue extends BaseController{
 			'where' => $where,
 			'count' => TRUE
 		]);
+
+		$productCatalogueList = $this->getUserRelationship($this->auth['id']);
+		if (!$user['isadmin']) {
+			$findTotal['where_in'] = $productCatalogueList;
+			$findTotal['where_in_field'] = 'tb1.id';
+		}
 		if($config['total_rows'] > 0){
 			$config = pagination_config_bt(['url' => 'backend/product/catalogue/index','perpage' => $perpage], $config);
 
@@ -67,13 +76,6 @@ class Catalogue extends BaseController{
 				'start' => $page * $config['per_page'],
 				'order_by'=> 'lft asc'
 			], TRUE);
-			echo '<pre>';
-            echo 'Total rows: ' . $config['total_rows'] . "\n";
-            echo 'Log count: ' . count($this->data['productCatalogueList']) . "\n";
-            echo 'Per page: ' . $config['per_page'] . "\n";
-            echo 'Current page: ' . ($page + 1) . "\n";
-            print_r($this->data['productCatalogueList']);
-            die();
 		}
 
 		$this->data['template'] = 'backend/product/catalogue/index';
@@ -81,7 +83,10 @@ class Catalogue extends BaseController{
 	}
 
 	public function create(){
+		helper(['mysavelog']);
+		$user = authentication();
 		$session = session();
+
 		$flag = $this->authentication->check_permission([
 			'routes' => 'backend/product/catalogue/create'
 		]);
@@ -103,10 +108,12 @@ class Catalogue extends BaseController{
 			 			'table' => 'product_translate',
 			 			'data' => $storeLanguage,
 			 		]);
+
 			 		$this->insert_router(['method' => 'create','id' => $resultid]);
 		 			$this->nestedsetbie->Get('level ASC, order ASC');
 					$this->nestedsetbie->Recursive(0, $this->nestedsetbie->Set());
 					$this->nestedsetbie->Action();
+					write_audit_log($user['id'], 'Thêm Mới', 'Tạo Nhóm Sản phẩm Thành Công');
 		 			$session->setFlashdata('message-success', 'Tạo Nhóm Sản phẩm Thành Công! Hãy tạo danh mục tiếp theo.');
  					return redirect()->to(BASE_URL.'backend/product/catalogue/create');
 		 		}
@@ -122,6 +129,8 @@ class Catalogue extends BaseController{
 	}
 
 	public function update($id = 0){
+		helper(['mysavelog']);
+		$user = authentication();
 		$id = (int)$id;
 		$session = session();
 		$flag = $this->authentication->check_permission([
@@ -163,6 +172,8 @@ class Catalogue extends BaseController{
 					$this->nestedsetbie->Recursive(0, $this->nestedsetbie->Set());
 					$this->nestedsetbie->Action();
 
+					write_audit_log($user['id'], 'Cập Nhật', 'Cập Nhật Nhóm Sản phẩm Thành Công');
+
 		 			$session->setFlashdata('message-success', 'Cập Nhật Nhóm Sản phẩm Thành Công!');
  					return redirect()->to(BASE_URL.'backend/product/catalogue/index');
 		 		}
@@ -179,6 +190,8 @@ class Catalogue extends BaseController{
 	}
 
 	public function delete($id = 0){
+		helper(['mysavelog']);
+		$user = authentication();
 		$session = session();
 		$flag = $this->authentication->check_permission([
 			'routes' => 'backend/product/catalogue/delete'
@@ -213,6 +226,7 @@ class Catalogue extends BaseController{
 				$this->nestedsetbie->Get('level ASC, order ASC');
 				$this->nestedsetbie->Recursive(0, $this->nestedsetbie->Set());
 				$this->nestedsetbie->Action();
+				write_audit_log($user['id'], 'Xóa', 'Xóa Nhóm Sản phẩm Thành Công');
 	 			$session->setFlashdata('message-success', 'Xóa bản ghi thành công!');
 			}else{
 				$session->setFlashdata('message-danger', 'Có vấn đề xảy ra, vui lòng thử lại!');
@@ -378,5 +392,38 @@ class Catalogue extends BaseController{
 			'validate' => $validate,
 			'errorValidate' => $errorValidate,
 		];
+	}
+
+	public function getUserRelationship($userId)
+	{
+		$userRelationship = $this->AutoloadModel->_get_where([
+			'select' => 'tb1.*, tb3.title, tb2.lft, tb2.rgt',
+			'table' => 'user_relationship as tb1',
+			'join' => [
+				[
+					'article_catalogue as tb2', 'tb2.id = tb1.user_id', 'inner'
+				],
+				[
+					'article_translate as tb3', 'tb3.objectid = tb1.user_id and tb3.module = \'article_catalogue\' and tb3.language = \'' . currentLanguage() . '\'', 'inner'
+				],
+			],
+			'where' => [
+				'tb1.user_id' => $userId
+			]
+		], true);
+		$id = [];
+		if (isset($userRelationship) && is_array($userRelationship) && count($userRelationship)) {
+			foreach ($userRelationship as $key => $val) {
+				$catalogueChildren = $this->AutoloadModel->_get_where([
+					'select' => 'id',
+					'table' => 'article_catalogue',
+					'where' => ['lft >=' => $val['lft'], 'rgt <=' => $val['rgt']],
+				], TRUE);
+
+				$id = array_merge($id, array_column($catalogueChildren, 'id'));
+			}
+		}
+
+		return $id;
 	}
 }

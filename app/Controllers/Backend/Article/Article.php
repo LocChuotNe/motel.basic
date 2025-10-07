@@ -26,12 +26,14 @@ class Article extends BaseController{
  			return redirect()->to(BASE_URL.'backend/dashboard/dashboard/index');
 		}
 
+		$user  = authentication();
+
 		helper(['mypagination']);
 		$page = (int)$page;
 		$perpage = ($this->request->getGet('perpage')) ? $this->request->getGet('perpage') : 20;
 		$where = $this->condition_where();
 		$keyword = $this->condition_keyword();
-		$catalogue = $this->condition_catalogue();
+		$catalogue = $this->condition_catalogue($user['id']);
 		$config['total_rows'] = $this->AutoloadModel->_get_where([
 			'select' => 'tb1.id, tb3.title',
 			'table' => $this->data['module'].' as tb1',
@@ -100,8 +102,11 @@ class Article extends BaseController{
 	}
 
 	public function create(){
+		helper(['mysavelog']);
+		$user = authentication();
 		$session = session();
 		$AutoloadModel = new \App\Models\AutoloadModel();
+
 		$flag = $this->authentication->check_permission([
 			'routes' => 'backend/article/article/create'
 		]);
@@ -145,6 +150,7 @@ class Article extends BaseController{
 	 				$flag = $this->create_relationship($resultid);
 	 				if($flag > 0){
 	 					$session->setFlashdata('message-success', 'Tạo Bài Viết Thành Công! Hãy tạo danh mục tiếp theo.');
+						write_audit_log($user['id'], 'Thêm mới', 'Tạo Bài Viết Thành Công');
  						return redirect()->to(BASE_URL.'backend/article/article/index');
 	 				}else{
 	 					$session->setFlashdata('message-danger', 'Có vấn đề xảy ra, vui lòng thử lại!');
@@ -163,6 +169,8 @@ class Article extends BaseController{
 	}
 
 	public function update($id = 0){
+		helper(['mysavelog']);
+		$user = authentication();
 		$session = session();
 		$flag = $this->authentication->check_permission([
 			'routes' => 'backend/article/article/update'
@@ -183,6 +191,12 @@ class Article extends BaseController{
 				],
 			'where' => ['tb1.id' => $id,'tb1.deleted_at' => 0]
 		]);
+
+		$articleCatalogueList = $this->condition_catalogue($user['id']);
+		if (!in_array($this->data[$this->data['module']]['catalogueid'], $articleCatalogueList) && !$user['isadmin']) {
+			$session->setFlashdata('message-danger', 'Bạn không có quyền truy cập vào chức năng này!');
+			return redirect()->to(BASE_URL . 'backend/dashboard/dashboard/index');
+		}
 
 		$this->data['tags'] = get_tag([
 			'module' => $this->data['module'],
@@ -235,6 +249,7 @@ class Article extends BaseController{
 		 				'canonical' => slug($this->request->getPost('canonical'))
 		 			]);
 		 			$session->setFlashdata('message-success', 'Cập Nhật Bài Viết Thành Công!');
+					write_audit_log($user['id'], 'Cập nhật', 'Cập Nhật Bài Viết Thành Công');
  					return redirect()->to(BASE_URL.'backend/article/article/index');
 		 		}
 
@@ -250,7 +265,10 @@ class Article extends BaseController{
 	}
 
 	public function delete($id = 0){
+		helper(['mysavelog']);
+		$user = authentication();
 		$session = session();
+		
 		$flag = $this->authentication->check_permission([
 			'routes' => 'backend/article/article/delete'
 		]);
@@ -296,6 +314,7 @@ class Article extends BaseController{
 
 			$session = session();
 			if($flag > 0){
+				write_audit_log($user['id'], 'Xóa', 'Xóa Bài Viết Thành Công');
 	 			$session->setFlashdata('message-success', 'Xóa bản ghi thành công!');
 			}else{
 				$session->setFlashdata('message-danger', 'Có vấn đề xảy ra, vui lòng thử lại!');

@@ -21,7 +21,7 @@ class Catalogue extends BaseController{
 			'routes' => 'backend/article/catalogue/index'
 		]);
 		if($flag == false){
- 			$this->session->setFlashdata('message-danger', 'Bạn không có quyền truy cập vào chức năng này!');
+ 			$session->setFlashdata('message-danger', 'Bạn không có quyền truy cập vào chức năng này!');
  			return redirect()->to(BASE_URL.'backend/dashboard/dashboard/index');
 		}
 
@@ -256,7 +256,7 @@ class Catalogue extends BaseController{
 					$this->nestedsetbie->Recursive(0, $this->nestedsetbie->Set());
 					$this->nestedsetbie->Action();
 
-					write_audit_log($user['id'], 'Cập Nhật', 'Cập Nhật Bài Viết Thành Công');
+					write_audit_log($user['id'], 'Cập Nhật', 'Cập Nhật Nhóm Bài Viết Thành Công');
 
 		 			$session->setFlashdata('message-success', 'Cập Nhật Nhóm Bài Viết Thành Công!');
  					return redirect()->to(BASE_URL.'backend/article/catalogue/index');
