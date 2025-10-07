@@ -1,8 +1,8 @@
-<form method="post" action="" class="form-horizontal box" >
+<form method="post" action="" class="form-horizontal box">
 	<div class="wrapper wrapper-content animated fadeInRight">
 		<div class="row">
 			<div class="box-body">
-				<?php echo  (!empty($validate) && isset($validate)) ? '<div class="alert alert-danger">'.$validate.'</div>'  : '' ?>
+				<?php echo (!empty($validate) && isset($validate)) ? '<div class="alert alert-danger">' . $validate . '</div>'  : '' ?>
 			</div><!-- /.box-body -->
 		</div>
 		<div class="row uk-flex-center uk-flex">
@@ -15,7 +15,7 @@
 									<label class="control-label text-left">
 										<span>Tiêu đề <b class="text-danger">(*)</b></span>
 									</label>
-									<?php echo form_input('title', set_value('title', (isset($promotion['title'])) ? $promotion['title'] : ''), 'class="form-control " placeholder="" autocomplete="off"');?>
+									<?php echo form_input('title', set_value('title', (isset($promotion['title'])) ? $promotion['title'] : ''), 'class="form-control " placeholder="" autocomplete="off"'); ?>
 								</div>
 							</div>
 							<div class="col-lg-6 mb15">
@@ -24,12 +24,12 @@
 										<span>Loại khuyến mại </span>
 									</label>
 									<?php
-										$type = [
-											// 'price' => 'VNĐ',
-											'percent' => '%',
-										]
+									$type = [
+										// 'price' => 'VNĐ',
+										'percent' => '%',
+									]
 									?>
-									<?php echo form_dropdown('type', $type, set_value('type', (isset($promotion['type'])) ? $promotion['type'] : ''), 'class="form-control m-b select2 " ');?>
+									<?php echo form_dropdown('type', $type, set_value('type', (isset($promotion['type'])) ? $promotion['type'] : ''), 'class="form-control m-b select2 " '); ?>
 								</div>
 							</div>
 							<div class="col-lg-6 mb15">
@@ -48,7 +48,7 @@
 									</label>
 									<?php $today = date('d/m/Y', strtotime('now')); ?>
 									<?php $tomorrow = date('d/m/Y', strtotime('tomorrow')); ?>
-									<?php echo form_input('daterange', validate_input(set_value('daterange', (isset($promotion['daterange'])) ? $promotion['daterange'] : $today.' - '. $tomorrow)), ' placeholder="Chọn thời gian" class="form-control " placeholder="" autocomplete="off"'); ?>
+									<?php echo form_input('daterange', validate_input(set_value('daterange', (isset($promotion['daterange'])) ? $promotion['daterange'] : $today . ' - ' . $tomorrow)), ' placeholder="Chọn thời gian" class="form-control " placeholder="" autocomplete="off"'); ?>
 								</div>
 							</div>
 							<div class="col-lg-6 mb15">
@@ -56,7 +56,7 @@
 									<label class="control-label text-left">
 										<span>Số lượng tối đa </span>
 									</label>
-									<?php echo form_input('max', set_value('max', (isset($promotion['max'])) ? $promotion['max'] : ''), 'class="form-control " placeholder="" autocomplete="off"');?>
+									<?php echo form_input('max', set_value('max', (isset($promotion['max'])) ? $promotion['max'] : ''), 'class="form-control " placeholder="" autocomplete="off"'); ?>
 								</div>
 							</div>
 							<div class="col-lg-12 mb15 ">
@@ -68,27 +68,28 @@
 										var promotionid = '<?php echo isset($promotion['promotionid']) ? $promotion['promotionid'] : (isset($_POST['promotionid']) ? $_POST['promotionid'] : '') ?>'
 									</script>
 									<div class="dd-item w100 mr20 data-promotion">
-										<?php echo form_input('promotionid', set_value('promotionid', (isset($promotion['promotionid'])) ? $promotion['promotionid'] : ''), 'class="form-control  promotionid" readonly placeholder="" autocomplete="off"');?>
+										<?php echo form_input('promotionid', set_value('promotionid', (isset($promotion['promotionid'])) ? $promotion['promotionid'] : ''), 'class="form-control  promotionid" placeholder="" autocomplete="off"'); ?>
 										<input type="text" name="promotionid_original" class="form-control  promotionid_original" value="<?php echo (isset($promotion['promotionid_original'])) ? $promotion['promotionid_original'] : ((isset($promotion['promotionid']) ? $promotion['promotionid'] : '')) ?>" style="display: none;">
 										<input type="checkbox" id="toogle_readonly" name="toogle_readonly">
+										<label for="toogle_readonly" style="margin-left:8px;cursor:pointer;">Chỉnh sửa</label>
 									</div>
-									<button class="btn btn-warning btn-sm create-random-promotion" >Random</button>
+									<button class="btn btn-warning btn-sm create-random-promotion">Random</button>
 								</div>
 							</div>
-							<?php 
-							if($method == 'update'){ 
-								?>
+							<?php
+							if ($method == 'update') {
+							?>
 								<div class="col-lg-12 ">
 									<div class="dd-item">
 										<label class="control-label text-left">
 											<span>Khuyến mãi đã sử dụng</span>
 										</label>
-										<?php echo form_input('count_bill', set_value('count_bill', (isset($promotion['count_bill'])) ? $promotion['count_bill'] : ''), 'class="form-control " placeholder="" disabled autocomplete="off"');?>
+										<?php echo form_input('count_bill', set_value('count_bill', (isset($promotion['count_bill'])) ? $promotion['count_bill'] : ''), 'class="form-control " placeholder="" disabled autocomplete="off"'); ?>
 									</div>
 								</div>
 							<?php
-							 } 
-							 ?>
+							}
+							?>
 						</div>
 						<div class="toolbox action clearfix">
 							<div class="uk-flex uk-flex-middle uk-button pull-right">
@@ -108,7 +109,7 @@
 							<div class="col-lg-12">
 								<div class="form-row">
 									<div class="avatar" style="cursor: pointer;"><img src="<?php echo (isset($_POST['image'])) ? $_POST['image'] : ((isset($promotion['image']) && $promotion['image'] != '') ? $promotion['image'] : 'public/not-found.png') ?>" class="img-thumbnail" alt=""></div>
-									<?php echo form_input('image', htmlspecialchars_decode(html_entity_decode(set_value('image', (isset($promotion['image'])) ? $promotion['image'] : ''))), 'class="form-control " placeholder="Đường dẫn của ảnh"  id="imageTxt"  autocomplete="off" style="display:none;" ');?>
+									<?php echo form_input('image', htmlspecialchars_decode(html_entity_decode(set_value('image', (isset($promotion['image'])) ? $promotion['image'] : ''))), 'class="form-control " placeholder="Đường dẫn của ảnh"  id="imageTxt"  autocomplete="off" style="display:none;" '); ?>
 								</div>
 							</div>
 						</div>

@@ -26,8 +26,6 @@ class Product extends BaseController
 		$user = authentication();
 		$session = session();
 
-
-
 		$flag = $this->authentication->check_permission([
 			'routes' => 'backend/product/product/index'
 		]);
@@ -112,7 +110,7 @@ class Product extends BaseController
 		helper(['mysavelog']);
 		$user = authentication();
 		$session = session();
-		
+
 		$flag = $this->authentication->check_permission([
 			'routes' => 'backend/product/product/create'
 		]);
@@ -127,7 +125,7 @@ class Product extends BaseController
 			'table' => 'id_general',
 			'where' => ['module' => $this->data['module']],
 		]);
-		dd($this->data['check_code']);die;
+		// dd($this->data['check_code']);die;
 		if (!isset($this->data['check_code']) && !is_array($this->data['check_code'])) {
 			$session->setFlashdata('message-danger', 'Bạn chưa tạo phần cấu hình chung cho mã Sản phẩm!');
 			return redirect()->to(BASE_URL . 'backend/product/product/index');
@@ -186,7 +184,7 @@ class Product extends BaseController
 						$this->nestedsetbie->Action();
 
 						write_audit_log($user['id'], 'Thêm Mới', 'Thêm Mới Sản phẩm Thành Công');
-						
+
 						$session->setFlashdata('message-success', 'Tạo Sản phẩm Thành Công! Hãy tạo danh mục tiếp theo.');
 						return redirect()->to(BASE_URL . 'backend/product/product/create');
 					}
@@ -205,6 +203,8 @@ class Product extends BaseController
 
 	public function update($id = 0)
 	{
+		helper(['mysavelog']);
+		$user = authentication();
 		$id = (int)$id;
 		$session = session();
 		$flag = $this->authentication->check_permission([
@@ -279,6 +279,8 @@ class Product extends BaseController
 					$this->nestedsetbie->Recursive(0, $this->nestedsetbie->Set());
 					$this->nestedsetbie->Action();
 
+					write_audit_log($user['id'], 'Cập Nhật', 'Cập Nhật Sản phẩm Thành Công');
+
 					$session->setFlashdata('message-success', 'Cập Nhật Sản phẩm Thành Công!');
 					return redirect()->to(BASE_URL . 'backend/product/product/index');
 				}
@@ -296,6 +298,8 @@ class Product extends BaseController
 
 	public function delete($id = 0)
 	{
+		helper(['mysavelog']);
+		$user = authentication();
 		$session = session();
 		$flag = $this->authentication->check_permission([
 			'routes' => 'backend/product/product/delete'
@@ -327,6 +331,7 @@ class Product extends BaseController
 				$this->nestedsetbie->Get('level ASC, order ASC');
 				$this->nestedsetbie->Recursive(0, $this->nestedsetbie->Set());
 				$this->nestedsetbie->Action();
+				write_audit_log($user['id'], 'Xóa', 'Xóa Sản phẩm Thành Công');
 				$session->setFlashdata('message-success', 'Xóa bản ghi thành công!');
 			} else {
 				$session->setFlashdata('message-danger', 'Có vấn đề xảy ra, vui lòng thử lại!');
