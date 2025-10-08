@@ -29,15 +29,28 @@ class User extends BaseController
 		$page = (int)$page;
 		$perpage = ($this->request->getGet('perpage')) ? $this->request->getGet('perpage') : 20;
 		$where = $this->condition_where();
-		// pre($where);
+		$deletedAtParam = $this->request->getGet('deleted_at');
+		// If deleted_at is not explicitly provided, include both 0 and 1 by using where_in
+		$useDeletedAtIn = !isset($deletedAtParam);
 		$keyword = $this->condition_keyword();
-		$config['total_rows'] = $this->AutoloadModel->_get_where([
+		$paramsCount = [
 			'select' => 'id',
 			'table' => $this->data['module'],
 			'keyword' => $keyword,
-			'where' => $where,
-			'count' => TRUE
-		]);
+		];
+		if ($useDeletedAtIn) {
+			// ensure deleted_at is not present in where
+			if (isset($where['deleted_at'])) {
+				unset($where['deleted_at']);
+			}
+			$paramsCount['where'] = $where;
+			$paramsCount['where_in'] = [0, 1];
+			$paramsCount['where_in_field'] = 'deleted_at';
+		} else {
+			$paramsCount['where'] = $where;
+		}
+		$paramsCount['count'] = TRUE;
+		$config['total_rows'] = $this->AutoloadModel->_get_where($paramsCount);
 		if ($config['total_rows'] > 0) {
 			$config = pagination_config_bt(['url' => 'backend/user/user/index', 'perpage' => $perpage], $config);
 
@@ -50,14 +63,24 @@ class User extends BaseController
 			$page = ($page > $totalPage) ? $totalPage : $page;
 			$page = $page - 1;
 
-			$this->data['userList'] = $this->AutoloadModel->_get_where([
+			$paramsList = [
 				'select' => 'id, isadmin, fullname, image, email, phone, address, created_at, image, gender, userid_created, userid_updated, publish',
 				'table' => $this->data['module'],
-				'where' => $where,
 				'keyword' => $keyword,
 				'limit' => $config['per_page'],
 				'start' => $page * $config['per_page'],
-			], TRUE);
+			];
+			if ($useDeletedAtIn) {
+				if (isset($where['deleted_at'])) {
+					unset($where['deleted_at']);
+				}
+				$paramsList['where'] = $where;
+				$paramsList['where_in'] = [0, 1];
+				$paramsList['where_in_field'] = 'deleted_at';
+			} else {
+				$paramsList['where'] = $where;
+			}
+			$this->data['userList'] = $this->AutoloadModel->_get_where($paramsList, TRUE);
 		}
 
 		$this->data['template'] = 'backend/user/user/index';

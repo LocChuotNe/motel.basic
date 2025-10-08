@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <base href="<?php echo BASE_URL; ?>">
-    <title>LOGIN | <?php echo SYSTEM_NAME ?> SYSTEM V3.0</title>
+    <title>LOGIN | <?php echo SYSTEM_NAME ?> SYSTEM V5.0</title>
 
     <link href="<?php echo ASSET_BACKEND; ?>css/bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo ASSET_BACKEND; ?>font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -14,7 +14,7 @@
     <link href="<?php echo ASSET_BACKEND; ?>css/animate.css" rel="stylesheet">
     <link href="<?php echo ASSET_BACKEND; ?>css/style.css" rel="stylesheet">
     <link href="<?php echo ASSET_BACKEND; ?>css/customize.css" rel="stylesheet">
-    
+
 </head>
 
 <body class="gray-bg">
@@ -47,8 +47,8 @@
             <div class="col-md-6">
                 <div class="ibox-content">
 
-                    <?php echo  (!empty($validate) && isset($validate)) ? '<div class="alert alert-danger">'.$validate.'</div>'  : '' ?>
-                    
+                    <?php echo (!empty($validate) && isset($validate)) ? '<div class="alert alert-danger">' . $validate . '</div>'  : '' ?>
+
                     <form class="m-t" method="post" action="">
                         <div class="form-group">
                             <input type="text" required name="otp" value="<?php echo set_value('otp') ?>" class="form-control" placeholder="Nhập vào mã OTP của bạn">
@@ -65,13 +65,13 @@
                 </div>
             </div>
         </div>
-        <hr/>
+        <hr />
         <div class="row">
             <div class="col-md-6">
                 <?php echo SYSTEM_NAME ?> Copyright <?php echo date('Y'); ?>
             </div>
             <div class="col-md-6 text-right">
-               <small>© 2021-2022</small>
+                <small>© 2021-2022</small>
             </div>
         </div>
     </div>

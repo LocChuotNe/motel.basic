@@ -31,6 +31,8 @@ class Catalogue extends BaseController
 		$page = (int)$page;
 		$perpage = ($this->request->getGet('perpage')) ? $this->request->getGet('perpage') : 20;
 		$where = $this->condition_where();
+		// dd($where);
+		// die;
 		$keyword = $this->condition_keyword();
 		$config['total_rows'] = $this->AutoloadModel->_get_where([
 			'select' => 'id',
