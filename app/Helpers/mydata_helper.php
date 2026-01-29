@@ -318,15 +318,35 @@ if (! function_exists('convert_code')){
 		$model = new AutoloadModel();
 
 		$code_Explode = explode('-',  $code );
-		$code = (int)'1'.$code_Explode[1];
+
+		// get objectid and num0 if available
 		$id = $model->_get_where([
-			'select' => 'objectid',
+			'select' => 'objectid, num0',
 			'table' => 'id_general',
 			'where' => ['module' => $module]
 		]);
-		$code  = $code + $id['objectid'];
-		$code = substr($code, 1);
-		$code = $code_Explode[0].'-'.$code.'-'.$code_Explode[2];
+		$objectid = isset($id['objectid']) ? (int)$id['objectid'] : 0;
+
+		// Case 1: expected format prefix-number-suffix (three parts)
+		if (is_array($code_Explode) && count($code_Explode) >= 3 && is_numeric($code_Explode[1])){
+			$num = (int) ('1' . $code_Explode[1]);
+			$num = $num + $objectid;
+			$num = substr($num, 1);
+			return $code_Explode[0] . '-' . $num . '-' . $code_Explode[2];
+		}
+
+		// Case 2: token style like 'PR{num0}' -> replace {num0} with padded objectid
+		if (is_string($code) && strpos($code, '{num0}') !== false){
+			// try to use num0 from DB if provided, otherwise default width
+			$width = isset($id['num0']) && (int)$id['num0'] > 0 ? (int)$id['num0'] : 4;
+			$padded = str_pad((string)$objectid, $width, '0', STR_PAD_LEFT);
+			return str_replace('{num0}', $padded, $code);
+		}
+
+		// Fallback: append objectid if any, else return original code
+		if ($objectid){
+			return $code . '-' . $objectid;
+		}
 		return $code;
 	}
 }
