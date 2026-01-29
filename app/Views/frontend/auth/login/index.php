@@ -1,78 +1,69 @@
-<div class="page-wrapper">
-    <!-- End Header -->
-    <main class="main">
-        <div class="page-content">
-            <main class="main">
-                <nav class="breadcrumb-nav">
-                    <div class="container">
-                        <ul class="breadcrumb">
-                            <li><a href="/"><i class="d-icon-home"></i></a></li>
-                            <li>Đăng nhập</li>
-                        </ul>
+<div class="limiter">
+    <div class="container-login100 container-login-admin">
+        <div id="particles-line"><canvas class="particles-js-canvas-el" width="1919" height="464" style="width: 100%; height: 100%;"></canvas></div>
+        <div class="wrap-login100 p-l-110 p-r-110 p-t-62 p-b-33">
+            <div class="login">
+                <form class="login100-form validate-form flex-sb flex-w login-form" action="" method="post">
+                    <span class="login100-form-title ">
+                        Đăng nhập
+                    </span>
+                    <div class="p-t-31 p-b-9">
+                        <span class="txt1">
+                            Tài khoản
+                        </span>
                     </div>
-                </nav>
-                <div class="page-content mt-6 pb-2 mb-10">
-                    <div class="container">
-                        <div class="login-popup">
-                            <div class="form-box">
-                                <div class="tab tab-nav-simple tab-nav-boxed form-tab">
-                                    <ul class="nav nav-tabs nav-fill align-items-center border-no justify-content-center mb-5" role="tablist">
-                                        <li class="nav-item">
-                                            <a class="nav-link active border-no lh-1 ls-normal btn-login" data-tab='tab-1'>Đăng nhập</a>
-                                        </li>
-                                        <li class="delimiter">hoặc</li>
-                                        <li class="nav-item">
-                                            <a class="nav-link border-no lh-1 ls-normal btn-login" data-tab='tab-2'>Đăng ký</a>
-                                        </li>
-                                    </ul>
-                                    <div class="tab-content">
-                                        <div class="tab-pane active tab-1" id="signin">
-                                            <form method="POST">
-                                                <div class="form-group mb-3">
-                                                <input type="text" class="form-control" id="singin-email" name="email" placeholder="Email đăng nhập *" required />
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="password" class="form-control" id="singin-password" name="password" placeholder="Mật khẩu *"
-                                                required />
-                                            </div>
-                                            <div class="form-footer">
-                                                <div class="form-checkbox">
-                                                    <input type="checkbox" class="custom-checkbox" id="signin-remember"
-                                                    name="signin-remember" />
-                                                    <label class="form-control-label" for="signin-remember">Nhớ tôi</label>
-                                                </div>
-                                                
-                                            </div>
-                                            <button class="btn btn-dark btn-block btn-rounded push-login" type="submit">Đăng nhập</button>
-                                        </form>
-                                    </div>
-                                    <div class="tab-pane tab-2" id="register">
-                                        <form  method="POST">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" id="register-name" name="name" placeholder="Họ tên *"/>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" id="register-email" name="email" placeholder="Email đăng nhập *"/>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="password" class="form-control" id="register-password" name="password" placeholder="Mật khẩu *"/>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="number" class="form-control" id="register-phone" name="phone" placeholder="Số điện thoại *"/>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" id="register-address" name="address" placeholder="Địa chỉ *"/>
-                                            </div>
-                                            <button class="btn btn-dark btn-block btn-rounded btn-register">Đăng ký</button>
-                                        </form>
-                                    </div>
-                                </div>
+                    <div class="wrap-input100 validate-input">
+                        <input type="text" name="email" class="input100 form-input" required="" value="" placeholder="Email ">
+                        <span class="focus-input100"></span>
+                    </div>
+
+                    <div class="p-t-13 p-b-9">
+                        <span class="txt1">
+                            Mật khẩu
+                        </span>
+                    </div>
+                    <div class="wrap-input100 validate-input">
+                        <input type="password" name="password" autocomplete="off" class="input100 form-input" required="" placeholder="Mật khẩu ">
+                        <span class="focus-input100"></span>
+                    </div>
+
+                    <div class="container-login100-form-btn m-t-17">
+                        <button class="login100-form-btn" type="submit">
+                            Đăng nhập
+                        </button>
+                    </div>
+                    <div class="container-login100-form-btn m-t-17">
+                        <a class="btn-register login100-form-btn" href=""> Đăng ký</a>
+                    </div>
+                    <div class="w-full text-center p-t-55">
+                        <span class="txt2">
+                            Bạn không nhớ mật khẩu?
+                        </span>
+
+                        <a href="" class="txt2 bo1 uk-display-inline-block login-forgot-pass">
+                            Quên mật khẩu
+                        </a>
+                    </div>
+                    <div class="loader" style="display:none;">
+                        <div class="css-spinner clickable">
+                            <div class="lds-spinner">
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
-        </main>
+        </div>
     </div>
-</main>
 </div>
